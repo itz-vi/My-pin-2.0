@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+</head>
+
+<body>
+  <!-- ----------Navbar -->
+  <div class=" w-full h-22 px-5 py-2 flex bg-gray-900 justify-between text-lg  font-semibold">
+    <a href="https://in.pinterest.com/" target="_blank"
+      class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-md shadow-red-500/50  font-medium rounded-lg text-base px-3 py-2 text-center">Pinterest</a>
+    <div class="flex gap-5 items-center">
+      <a href="/profile"
+        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-md shadow-blue-500/50  font-medium rounded-lg text-base px-5 py-2.5 text-center">Profile</a>
+      <a href="/feed"
+        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-md shadow-blue-500/50  font-medium rounded-lg text-base px-5 py-2.5 text-center">Feed</a>
+      <a href="/logout"
+        class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-md shadow-red-500/50 font-medium rounded-lg text-base px-5 py-2.5 text-center me-1">Logout</a>
+    </div>
+  </div>
+
+  <!-- profile update  -->
+  <div class="profile w-full min-h-screen  bg-gray-800 pt-2">
+    <form id="uploadform" hidden action="/fileupload" method="post" enctype="multipart/form-data">
+      <input type="file" name="image">
+    </form>
+    <div class="profdets flex flex-col items-center">
+      <div class="relative">
+        <span id="uploadicon"
+          class="w-8 h-8 absolute bottom-0 right-0 rounded-full flex items-center justify-center bg-zinc-200">
+          <i class="text-zinc-800 ri-pencil-fill"></i>
+        </span>
+        <div class="w-32 h-32 bg-zinc-200 rounded-full overflow-hidden">
+          <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profileImage %>">
+        </div>
+      </div>
+      <h1 class="text-3xl font-semibold mt-2 text-white">
+        <%= user.fullname %>
+      </h1>
+      <h3 class="text-md mb-2 text-white">
+        <%= user.username %>
+      </h3>
+      <a href="#"
+        class="shadow-md shadow-slate-400/50 px-7 py-2 bg-gray-900 text-white rounded-full text-xs font-semibold">Edit</a>
+      <a href="/add"
+        class=" shadow-md shadow-purple-700/50 text-white ms-3 mt-5 bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">Create new post</a>
+
+    </div>
+
+    <!------------ created boards------  -->
+    <div class="cards flex flex-wrap gap-10 px-10 mt-10">
+      <div class="card">
+        <div class="w-52 h-90 bg-zinc-200 rounded-lg overflow-hidden">
+          <img class="w-full h-60 object-cover" src="/images/uploads/<%= user?.posts[0]?.image %>" alt="">
+        </div>
+        <a href="/show/posts" class="text-xl text-white initial-block font-semibold mt-3">your Uploaded Pins</a>
+        <h5 class="text-sm font-medium text-white opacity-80">
+          <%= user.posts.length %> Pins
+        </h5>
+      </div>
+
+      <script>
+        document.querySelector("#uploadicon").addEventListener("click", function () {
+          document.querySelector("#uploadform input").click();
+        })
+        document.querySelector("#uploadform input").addEventListener("change", function () {
+          document.querySelector("#uploadform").submit();
+        });
+      </script>
+
+</body>
+</html>
